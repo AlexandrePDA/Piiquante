@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require('path');
 
 const stuffRoutes = require("./routes/sauces");
 const userRoutes = require('./routes/user');
@@ -14,8 +15,6 @@ mongoose
 
 const app = express();
 
-app.use(express.json());
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -28,6 +27,10 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(express.json());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use("/api/sauces", stuffRoutes);
 app.use('/api/auth', userRoutes);
