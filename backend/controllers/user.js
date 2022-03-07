@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const emailValidator = require("email-validator");
 const passwordValidator = require("password-validator");
-const user = require("../models/user");
+const User = require("../models/user");
 
 
 // require("dotenv").config();
@@ -41,7 +41,7 @@ exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
-      const user = new user({
+      const user = new User({
         email: req.body.email,
         password: hash,
       });
@@ -56,7 +56,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  user.findOne({ email: req.body.email })
+  User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ message: "Utilisateur non trouvé" });
