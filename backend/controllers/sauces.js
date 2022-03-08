@@ -17,13 +17,12 @@ exports.createSauces = (req, res, next) => {
 
 // modifier une sauce
 exports.modifySauces = (req, res, next) => {
-  const saucesObject = req.file
-    ? {
-        ...JSON.parse(req.body.sauces),
+  const saucesObject = req.file ?
+   {
+        ...JSON.parse(req.body.Sauces),
         imageUrl: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
-      }
+          req.file.filename}`
+   }
     : { ...req.body };
   Sauces
     .updateOne({ _id: req.params.id }, { ...saucesObject, _id: req.params.id })
