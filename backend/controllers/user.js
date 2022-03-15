@@ -25,7 +25,9 @@ passwordSchema
   .not()
   .spaces();
 
-exports.signup = (req, res, next) => {
+/////////////////////////// ///
+
+exports.signup = async (req, res, next) => {
   if (!emailValidator.validate(req.body.email)) {
     return res
       .status(401)
@@ -38,22 +40,20 @@ exports.signup = (req, res, next) => {
         "Pas d'espace, longueur entre 8 et 20 caractères, minimum 1 chiffre, 1 minuscule et 1 majuscule",
     });
   }
-  bcrypt
-    .hash(req.body.password, 10)
-    .then((hash) => {
-      const user = new User({
-        email: req.body.email,
-        password: hash,
-      });
-      user
-        .save()
-        .then(() => res.status(201).json({ message: "Utilisateur créé" }))
-        .catch((error) =>
-          res.status(400).json({ message: "Cet email est déjà utilisé !" })
-        );
-    })
-    .catch((error) => res.status(500).json({ error }));
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10)
+    const user = new User({
+      email: req.body.email,
+      password: hash,
+    });
+    await user.save();
+    res.status(201).json({ message: "Utilisateur créé" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ message: "Cet email est déjà utilisé !" });
+  }
 };
+
 
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
