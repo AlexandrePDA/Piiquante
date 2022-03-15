@@ -6,7 +6,6 @@ const passwordValidator = require("password-validator");
 const User = require("../models/user");
 
 
-// require("dotenv").config();
 
 const passwordSchema = new passwordValidator();
 
