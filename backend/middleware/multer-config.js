@@ -6,6 +6,7 @@ const MYME_TYPES = {
     'image/png': 'png'
 };
 
+// save données img entrées par le client
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, 'images')

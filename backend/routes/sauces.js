@@ -5,6 +5,8 @@ const saucesCtrl = require("../controllers/sauces");
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
+
+// points d'accès avec middlewares et controllers
 router.post("/", auth, multer ,saucesCtrl.createSauces);
 router.put("/:id", auth, multer, saucesCtrl.modifySauces);
 router.delete("/:id", auth, saucesCtrl.deleteSauces);

@@ -6,6 +6,7 @@ const path = require('path');
 const stuffRoutes = require("./routes/sauces");
 const userRoutes = require('./routes/user');
 
+// lié BD avec code => utilisation de Mongoose
 mongoose
   .connect(
     `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@${process.env.LINK_DB}?retryWrites=true&w=majority`,
@@ -16,6 +17,7 @@ mongoose
 
 const app = express();
 
+// éviter les erreurs de CORS
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -33,6 +35,7 @@ app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+// routes
 app.use("/api/sauces", stuffRoutes);
 app.use('/api/auth', userRoutes);
 

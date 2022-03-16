@@ -24,8 +24,8 @@ passwordSchema
   .not()
   .spaces();
 
-/////////////////////////// ///
 
+// signup
 exports.signup = async (req, res, next) => {
   if (!emailValidator.validate(req.body.email)) {
     return res
@@ -53,7 +53,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-
+// login
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
